@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class GameLogic: ObservableObject {
+
+    
+    
+}
