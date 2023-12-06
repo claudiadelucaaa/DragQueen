@@ -35,7 +35,7 @@ class GameScene: SKScene {
         self.score += 1
         self.playerScore?.text = String(score)
         print(score)
-        let playerAction = SKAction.moveTo(y: CGFloat(150), duration: 2)
+      //  let playerAction = SKAction.moveTo(y: CGFloat(150), duration: 2)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
