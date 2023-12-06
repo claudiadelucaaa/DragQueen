@@ -20,18 +20,42 @@ class GameScene: SKScene {
     
 //MARK: SCORE
     private var playerScore: SKLabelNode?
+    private var player: SKSpriteNode?
+    private var hurdle: SKSpriteNode?
     private var score = 0
     
     override func didMove(to view: SKView) {
         self.playerScore = self.childNode(withName: "//playScore") as? SKLabelNode
+        self.player = self.childNode(withName: "//Player") as? SKSpriteNode
+        self.hurdle = self.childNode(withName: "//Hurdle") as? SKSpriteNode
         self.playerScore?.text = String(score)
     }
     
-    func touchDown(atPoint pos: CGPoint){
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.score += 1
+        self.playerScore?.text = String(score)
+        print(score)
+        let playerAction = SKAction.moveTo(y: CGFloat(150), duration: 2)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+
     }
     
     override func update(_ currentTime: TimeInterval) {
         
+    }
+    
+    //Game functions
+    func updateScoreDisplay() {
+        self.playerScore?.text = String(score)
     }
 }
