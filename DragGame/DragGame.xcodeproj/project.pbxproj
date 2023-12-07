@@ -16,6 +16,7 @@
 		652EA1A62B208F2E00BD557D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 652EA1A52B208F2E00BD557D /* Assets.xcassets */; };
 		652EA1A92B208F2E00BD557D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 652EA1A72B208F2E00BD557D /* LaunchScreen.storyboard */; };
 		654D51AE2B20989C006F72C8 /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654D51AD2B20989C006F72C8 /* GameLogic.swift */; };
+		F65E7EFB2B21C08900E80D1D /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65E7EFA2B21C08900E80D1D /* Texture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		652EA1A52B208F2E00BD557D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		652EA1A82B208F2E00BD557D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		654D51AD2B20989C006F72C8 /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
+		F65E7EFA2B21C08900E80D1D /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				652EA1A22B208F2D00BD557D /* Main.storyboard */,
 				652EA1A52B208F2E00BD557D /* Assets.xcassets */,
 				652EA1A72B208F2E00BD557D /* LaunchScreen.storyboard */,
+				F65E7EFA2B21C08900E80D1D /* Texture.swift */,
 			);
 			path = DragGame;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				652EA19F2B208F2D00BD557D /* GameScene.swift in Sources */,
+				F65E7EFB2B21C08900E80D1D /* Texture.swift in Sources */,
 				652EA1A12B208F2D00BD557D /* GameViewController.swift in Sources */,
 				654D51AE2B20989C006F72C8 /* GameLogic.swift in Sources */,
 				652EA1992B208F2D00BD557D /* AppDelegate.swift in Sources */,
