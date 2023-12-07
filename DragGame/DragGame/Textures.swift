@@ -14,8 +14,8 @@ class Textures {
                                    SKTexture(imageNamed: "Bianca2"),
                                    SKTexture(imageNamed: "Bianca3"),
                                    SKTexture(imageNamed: "Bianca4"),
-                                   SKTexture(imageNamed: "Bianca5"),
-                                   SKTexture(imageNamed: "Bianca6")
+                                   SKTexture(imageNamed: "Bianca5")
+                                   
     ]
     
     let heroRunTextureArray : [SKTexture] = [SKTexture(imageNamed: "Warrior_Run_1"),
