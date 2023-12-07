@@ -402,6 +402,7 @@ class GameScene: SKScene {
     var groundMask : UInt32 = 2
     var wallMask : UInt32 = 3
     var enemyMask : UInt32 = 4
+    var advantagMask : UInt32 = 5
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -497,6 +498,8 @@ class GameScene: SKScene {
         wallNode.addChild(wallSpriteNode)
     }
     
+    // MARK: - Hero
+    
     func addHero(at position: CGPoint) {
         heroSpriteNode = SKSpriteNode(texture: heroNodeTexture)
         let heroRunAnimation = SKAction.animate(with: textures.dragWalking , timePerFrame: 0.1)
@@ -505,7 +508,7 @@ class GameScene: SKScene {
         
         heroSpriteNode.position = position
         heroSpriteNode.zPosition = 1
-        heroSpriteNode.setScale(4)
+        heroSpriteNode.setScale(3)
         
         
         heroSpriteNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: heroNodeTexture.size().width - 30, height: heroNodeTexture.size().height + 10))
@@ -518,11 +521,15 @@ class GameScene: SKScene {
         heroSpriteNode.physicsBody?.isDynamic = true
         heroSpriteNode.physicsBody?.allowsRotation = false
         
+//        let moveLeft = SKAction.moveBy(x: -size.width / 3, y: 0, duration: 10)
+//        let moveLeftRepeat = SKAction.repeatForever(moveLeft)
+//        heroSpriteNode.run(moveLeftRepeat)
+        
         heroNode.addChild(heroSpriteNode)
     }
-    
+    // MARK: - Hero position
     func createHero() {
-        addHero(at: CGPoint(x: size.width / 3, y: size.height / 4))
+        addHero(at: CGPoint(x: size.width / 4, y: size.height / 3))
     }
     
    /* func createAudio() {
@@ -533,35 +540,41 @@ class GameScene: SKScene {
         musicNode.autoplayLooped = true
         musicNode.run(SKAction.play())
     }*/
+    // MARK: - Enemy
     
-    func createEnemy(height: CGFloat) {
+    func createEnemy(width: CGFloat) {
         let enemyNode = SKNode()
-        let enemySpriteNode = SKSpriteNode(texture: textures.enemyTexture[0])
-        let enemyAnimation = SKAction.animate(with: textures.enemyTexture, timePerFrame: 0.1)
+        let enemySpriteNode = SKSpriteNode(texture: textures.heroRunTextureArray[0])
+        let enemyAnimation = SKAction.animate(with: textures.heroRunTextureArray, timePerFrame: 0.1)
         let enemyAnimationRepeat = SKAction.repeatForever(enemyAnimation)
         enemySpriteNode.run(enemyAnimationRepeat)
         
-        enemySpriteNode.position = CGPoint(x: size.width, y: height)
+        enemySpriteNode.position = CGPoint(x:  self.size.width - 50, y: 2)
         enemySpriteNode.zPosition = 1
-        enemySpriteNode.xScale *= -1
+        enemySpriteNode.setScale(2)
         
         enemySpriteNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: textures.enemyTexture[0].size().width, height: textures.enemyTexture[0].size().height))
+        
         enemySpriteNode.physicsBody?.categoryBitMask = enemyMask
         enemySpriteNode.physicsBody?.contactTestBitMask = heroMask
         enemySpriteNode.physicsBody?.collisionBitMask = groundMask
         
         enemySpriteNode.physicsBody?.isDynamic = true
-        enemySpriteNode.physicsBody?.affectedByGravity = false
+        enemySpriteNode.physicsBody?.affectedByGravity = true
         enemySpriteNode.physicsBody?.allowsRotation = false
         
-        let move = SKAction.applyImpulse(CGVector(dx: -100, dy: 0), duration: 10)
-        enemySpriteNode.run(move)
+//        duration till the enemy arrive the -100
+        let moveLeft = SKAction.moveBy(x: -100, y: 0, duration: 0.5)
+        let moveLeftRepeat = SKAction.repeatForever(moveLeft)
+        enemySpriteNode.run(moveLeftRepeat)
         
         enemyNodeArray.append(enemyNode)
         enemyNode.addChild(enemySpriteNode)
         addChild(enemyNode)
     }
+
     
+    // MARK: - herojump
     func heroJump(tapPos: CGPoint) {
         heroInAir = true
         jumpCount += 1
@@ -570,20 +583,43 @@ class GameScene: SKScene {
         heroSpriteNode.physicsBody?.velocity = CGVector.zero
         
 //        let xTar = size.width / 2 < tapPos.x ? 1 : -1
-        heroSpriteNode.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 120))
+        heroSpriteNode.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 150))
 //        heroSpriteNode.physicsBody?.applyImpulse(CGVector(dx: 100 * xTar, dy: 120))
     }
-
+    
+    
+    // MARK: - herodied
     func heroDied() {
         let deathAnim = SKAction.animate(with: textures.dragWalking , timePerFrame: 0.1)
         heroSpriteNode.run(deathAnim)
     }
     
+    
+    // MARK: - random num enemies inicialiced
+    
     func startSpawn() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            self.createEnemy(height: CGFloat.random(in: 0...self.size.height - 50))
+        var timeInterval: TimeInterval = 3.0
+
+        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
+            self.createEnemy(width: self.size.width - self.size.width/20)
+
+            // Reduzca el intervalo de tiempo para aumentar la frecuencia con el tiempo
+            timeInterval *= 0.2
+            // Asegúrate de que el intervalo de tiempo no sea menor que un límite mínimo
+            timeInterval = max(timeInterval, 0.5)
+            
+            // Puedes ajustar los valores según sea necesario
         }
     }
+
+//    func startSpawn() {
+//        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+//            self.createEnemy(width:  CGFloat.random(in: self.size.width/3...self.size.width) )
+//        }
+//    }
+    
+    
+    // MARK: - Logic end game
     
     func endGame() {
         if gameIsPaused == true {
@@ -616,6 +652,7 @@ class GameScene: SKScene {
     }
 }
 
+// MARK: - contact enemi
 
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
